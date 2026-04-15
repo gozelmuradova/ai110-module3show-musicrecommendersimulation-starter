@@ -17,17 +17,32 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+Real-world recommenders like Spotify compare your listening history against
+song attributes to find the closest match to your taste. My version does the
+same thing on a small scale — it scores each song by measuring how close it
+is to the user's preferences, then ranks the results highest to lowest.
 
-Some prompts to answer:
+**Song features:** genre, mood, energy, valence, tempo_bpm, danceability, acousticness
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+**UserProfile stores:** preferred genre, preferred mood, target energy, target valence, target danceability
 
-You can include a simple diagram or bullet list if helpful.
+### Algorithm Recipe
+
+| Feature | Points | Method |
+|---|---|---|
+| Mood match | +2.0 | Exact match |
+| Genre match | +1.5 | Exact match |
+| Energy | up to +1.5 | 1.5 × (1 − abs(song − target)) |
+| Valence | up to +1.0 | 1.0 × (1 − abs(song − target)) |
+| Danceability | up to +0.5 | 0.5 × (1 − abs(song − target)) |
+
+**Max possible score: 6.5 points.** Songs are ranked highest to lowest and the top k results are returned.
+
+### Potential Biases
+
+This system might over-prioritize genre, ignoring great songs that match the
+user's mood but come from an unexpected genre. It also has no memory — every
+session starts fresh with no learning from past listens.
 
 ---
 
@@ -121,35 +136,31 @@ Give your recommender a name, for example:
 
 ## 2. Intended Use
 
-- What is this system trying to do
-- Who is it for
-
-Example:
-
-> This model suggests 3 to 5 songs from a small catalog based on a user's preferred genre, mood, and energy level. It is for classroom exploration only, not for real users.
+This model suggests 3 to 5 songs from a small catalog based on a user's
+preferred genre, mood, and energy level. It is for classroom exploration
+only, not for real users.
 
 ---
 
 ## 3. How It Works (Short Explanation)
 
-Describe your scoring logic in plain language.
-
-- What features of each song does it consider
-- What information about the user does it use
-- How does it turn those into a number
-
-Try to avoid code in this section, treat it like an explanation to a non programmer.
+Each song is given a score based on how well it matches the user's taste
+profile. Mood and genre matches give bonus points. Energy, valence, and
+danceability are scored by proximity — the closer the song's value is to
+the user's target, the higher it scores. Songs are then ranked and the
+top results are returned.
 
 ---
 
 ## 4. Data
 
-Describe your dataset.
-
-- How many songs are in `data/songs.csv`
-- Did you add or remove any songs
-- What kinds of genres or moods are represented
-- Whose taste does this data mostly reflect
+- 20 songs total (10 starter + 10 added)
+- Genres represented: pop, lofi, rock, ambient, jazz, synthwave, indie pop,
+  r&b, hip-hop, classical, metal, indie folk, latin, electronic, country,
+  soul, chillwave
+- Moods represented: happy, chill, intense, relaxed, focused, moody,
+  romantic, confident, peaceful, angry, sad, euphoric, nostalgic,
+  melancholy, dreamy
 
 ---
 
