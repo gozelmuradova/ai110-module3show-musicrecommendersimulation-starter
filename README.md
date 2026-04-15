@@ -89,6 +89,9 @@ Use this section to document the experiments you ran. For example:
 - What happened when you added tempo or valence to the score
 - How did your system behave for different types of users
 
+Experiment 1
+![exp1](screenshots/image.png)
+
 ![profile ss1](screenshots/ss1.png)
 ![profile ss2](screenshots/ss2.png)
 
