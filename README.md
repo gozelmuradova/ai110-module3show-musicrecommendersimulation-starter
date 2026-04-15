@@ -89,6 +89,25 @@ Use this section to document the experiments you ran. For example:
 - What happened when you added tempo or valence to the score
 - How did your system behave for different types of users
 
+![profile ss1](screenshots/ss1.png)
+![profile ss2](screenshots/ss2.png)
+
+
+
+- Chill Lofi and Deep Intense Rock both scored near 6.4/6.5 for their #1 result, confirming the scoring logic works when a clear match exists. - The adversarial profile (high energy + sad) ranked 3AM Thoughts #1 despite its low energy (0.33), because mood and genre bonus points (3.5 pts) outweighed the energy mismatch. This reveals that exact-match weights can override numeric proximity when the catalog is small. - No single song dominated every list, suggesting genre weight is balanced enough to avoid a hard filter bubble with this dataset.
+
+
+
+
+-### Weight shift experiment
+Doubled energy weight (1.5 → 3.0) and halved genre weight (1.5 → 0.75).
+
+Result: Rankings shifted — songs with closer energy scores climbed even when
+they had no genre match, while exact genre matches dropped if their energy
+was off. This confirmed that genre weight was acting as a strong tiebreaker
+in the original version. Reverted to original weights for the final version
+since the original results felt more musically intuitive.
+
 ---
 
 ## Limitations and Risks
@@ -102,6 +121,24 @@ Examples:
 - It might over favor one genre or mood
 
 You will go deeper on this in your model card.
+
+
+The system has a strong mood/genre lock-in problem — because mood and genre
+matches award fixed bonus points (2.0 and 1.5), a song that perfectly matches
+both will almost always rank #1 regardless of how far off its numeric features
+are. This was revealed by the adversarial profile, where a quiet low-energy
+folk song ranked #1 for a user who wanted high-energy music, simply because
+the mood and genre labels matched.
+
+The dataset is also too small and unevenly distributed to avoid filter bubbles.
+Lofi has 3 songs, pop has 2, and most other genres have only 1 — so a lofi user
+will always see the same 2-3 songs at the top with very little variety. In a
+real system this would push users into an increasingly narrow listening tunnel.
+
+Finally, the system treats all users identically — there is no concept of
+context. A user who wants chill music at midnight and high-energy music at the
+gym is represented by a single static profile, which means half their actual
+taste is always ignored.
 
 ---
 
