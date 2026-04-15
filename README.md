@@ -154,6 +154,23 @@ Write 1 to 2 paragraphs here about what you learned:
 - about where bias or unfairness could show up in systems like this
 
 
+## Reflection
+
+The biggest learning moment was the adversarial profile experiment — a quiet
+folk song ranked #1 for a user who wanted high-energy music because mood and
+genre bonus points overrode everything else. That made weighted scoring click
+for me: the weights are decisions about what matters, not just numbers.
+
+AI tools helped with boilerplate but I had to double-check the logic. At one
+point the wrong dictionary keys would have silently scored every song zero
+without throwing an error — AI code can look right and still be subtly wrong.
+
+What surprised me is how simple math can still feel like a real recommendation.
+When the right lofi songs surfaced for the right profile, it felt intelligent
+even though it was just addition on five numbers. That gap made me more
+skeptical of trusting real apps without understanding what they actually
+optimize for.
+
 ---
 
 ## 7. `model_card_template.md`
